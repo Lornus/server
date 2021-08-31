@@ -87,21 +87,39 @@ app.post('/api/planets', (req: Request, res: Response) => {
     return res.json(planets)
 })
 
-app.put('api/planets/:id', (req: Request, res: Response) => {
+app.put('/api/planets/:id', (req: Request, res: Response) => {
 
-    const planet = planets.find(planet => planet.id === parseInt(req.params.id))
+    const planet: IPlanetArray | undefined = planets.find(planet => planet.id === parseInt(req.params.id))
 
-    const {error} = validatePlanet(req.body)
+    if (planet) {
+        const {error} = validatePlanet(req.body)
 
-    if (error) {
-        res.status(400).send(error.message)
+        if (error) {
+            res.status(400).send(error.message)
+            return
+        }
+
+        planet.name = req.body.name
+        planet.mass = req.body.mass
+        planet.satellitesAmount = req.body.satellitesAmount
+        res.json(planet)
+    } else {
+        res.status(400).send('Not found')
         return
     }
 
-    planet.name = req.body.name
-    planet.mass = req.body.mass
-    planet.satellitesAmount = req.body.satellitesAmount
-    res.json(planet)
+})
+
+app.delete('/api/planets/:id', (req: Request, res: Response) => {
+    const planet: IPlanetArray | undefined = planets.find(planet => planet.id === parseInt(req.params.id))
+    if (planet) {
+        const index = planets.indexOf(planet)
+        planets.splice(index, 1)
+        return res.json(planet)
+    } else {
+        res.status(400).send('Not found')
+        return
+    }
 
 })
 

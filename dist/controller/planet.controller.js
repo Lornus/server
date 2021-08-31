@@ -1,3 +1,4 @@
+"use strict";
 /*
 import {PlanetModel} from "../model/planet.model";
 import {planets} from "../data/planets"
