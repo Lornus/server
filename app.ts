@@ -46,14 +46,8 @@ app.get('/api', (req: Request, res: Response) => {
                 "/planet/id": "get planet by id"
             },
             {
-                "/planet/searchByName": "search planet by name[?name=searchParams]"
-            },
-            {
                 "crud operations[/planets, /planet/id, /planet/id]": "POST PUT DELETE"
             },
-            {
-                "message for Lizo4ka": "Loooveee Liizoochka"
-            }
         ]
     })
 })
@@ -85,6 +79,10 @@ app.post('/api/planets', (req: Request, res: Response) => {
 
     planets.push(planet)
     return res.json(planets)
+})
+
+app.get('/secretMessage', (req:Request, res:Response) => {
+    return res.send('Loovee Liiizoooochkaaaaa')
 })
 
 app.put('/api/planets/:id', (req: Request, res: Response) => {
@@ -132,5 +130,5 @@ function validatePlanet(planet: Request): ValidationResult {
     return schema.validate(planet)
 }
 
-const port = process.env.PORT || 2121;
+const port = process.env.PORT || 2120;
 app.listen(port, () => console.log('the serv is running'));
